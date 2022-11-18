@@ -1,0 +1,16 @@
+{
+  "name": "demo",
+  "version": "0.1.0",
+  "description": "example project to test mocha adapter capabilities",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "stefreschke",
+  "license": "MIT",
+  "dependencies": {
+    "chai": "^4.3.7",
+    "mocha": "^10.1.0",
+    "stryker": "^0.35.1"
+  }
+}
