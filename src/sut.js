@@ -6,3 +6,7 @@ module.exports.somePredicate = function (number) {
     }
     return stuff < 10;
 }
+
+module.exports.additionOfNumbersAndStrings = function (a, b) {
+    return a + b
+}
