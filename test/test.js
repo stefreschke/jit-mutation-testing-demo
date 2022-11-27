@@ -22,3 +22,10 @@ describe('additionOfNumbersAndStrings', function () {
     assert.equal(result, 9)
   })
 })
+
+describe('sumUpTo', function () {
+  it('3 -> 1 + 2 + 3 = 6', function () {
+    let result = sut.sumUpTo(3)
+    assert.equal(result, 6)
+  })
+})
