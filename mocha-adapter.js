@@ -85,14 +85,14 @@ function createMocha(options) {
 }
 
 // mocha: Mocha, options: MochaOptions
-function configureMocha(mocha, options) {
+function configureMocha(mocha, options, timeout) {
     // operation: (input: T) => void
     function setIfDefined(value, operation) {
         if (typeof value !== 'undefined') {
             operation.apply(mocha, [value]);
         }
     }
-    mocha.timeout(10000)
+    mocha.timeout(timeout)
 
     setIfDefined(options['async-only'], (asyncOnly) => asyncOnly && mocha.asyncOnly());
     setIfDefined(options.ui, mocha.ui);
@@ -109,13 +109,13 @@ function addTestFiles(mocha, testfiles) {
 
 // intercept: (mocha: Mocha) => void, disableBail: boolean
 // returns Promise<DryRunResult>
-async function run(intercept, testFiles, mochaOptions) {
+async function run(intercept, testFiles, mochaOptions, timeout) {
     // this.requireCache.clear();
     const mocha = createMocha({
         reporter: MochaReporter,
         dryRun: false,
     });
-    configureMocha(mocha, mochaOptions);
+    configureMocha(mocha, mochaOptions, timeout);
     intercept(mocha);
     addTestFiles(mocha, testFiles);
     try {
@@ -153,6 +153,7 @@ const mochaTestState = t => t.state
 
 // note that test here is any object {id: id, name: name, file: fn}
 async function singleTestRun(targetTest) {
+    const timeout = targetTest.timeout;
     var options = loadOptions();
     options.ignore = [];
     options.extension = ['.js'];
@@ -160,7 +161,7 @@ async function singleTestRun(targetTest) {
     options.recursive = true;
     options.sort = false;
     options.spec = ['test/**/*.js'];
-    options.timeout = 10000;
+    // options.timeout = 10000;
 
     const files = [targetTest.file];
     var testWasRun = false;
@@ -181,7 +182,7 @@ async function singleTestRun(targetTest) {
             }
         });
     };
-    let result = await run(interceptor, files, options);
+    let result = await run(interceptor, files, options, timeout);
     return { name: targetTest.name, file: targetTest.file, testRun: testWasRun, testResult: testResult, mochaResult: result }
 }
 
@@ -214,7 +215,7 @@ async function testSuiteDiscovery() {
             id: id,
             name: name,
             file: fn,
-            run: async function () { return await singleTestRun({ id: id, name: name, file: fn }) }
+            run: async function (to = 10000) { return await singleTestRun({ id: id, name: name, file: fn, timeout: to }) }
         })
     }
     return testResult;
