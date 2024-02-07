@@ -16,9 +16,9 @@ function testB() {
     assertTrue(min(7, 7) == 7);
 }
 
-//function testC() {
-//    assertTrue(min(10, 16) == 10);
-//}
+function testC() {
+    assertTrue(min(10, 16) == 10);
+}
 
 function main() {
     // lol, nothing to do here

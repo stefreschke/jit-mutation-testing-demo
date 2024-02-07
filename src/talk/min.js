@@ -19,9 +19,10 @@ function test_B() {
     if (result != 7) throw Error()
 }
 
-//function test_C() {
-//    let result = min(10, 16)
-//    if (result != 10) throw Error()
-//}
+
+function test_C() {
+     let result = min(10, 16)
+     if (result != 10) throw Error()
+}
 
 console.log("5b2723bf-ebff-479d-a4ba-cccb0dbf93f4")

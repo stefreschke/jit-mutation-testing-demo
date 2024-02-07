@@ -14,13 +14,13 @@ function calc(i, j) {
 console.log("test discovery requires non empty main");
 
 function test_lineC() {
-    if (!calc(5, 99)) {  // b_i: true, b_j: true
+    if (!calc(5, 99)) {
         throw Error();
     }
 }
 
 function test_branchC() {
-    if (!calc(11, 111)) {  // b_i: false, b_j: false
+    if (!calc(11, 111)) {
         throw Error();
     }
 }
